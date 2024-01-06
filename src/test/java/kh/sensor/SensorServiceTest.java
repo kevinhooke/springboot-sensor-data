@@ -1,6 +1,9 @@
 package kh.sensor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ public class SensorServiceTest {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	void saveReading() throws Exception {
+	void testSaveAndRetrieveReading() throws Exception {
 		
 		SensorReading reading = new SensorReading();
 		reading.setSensorName("test");
@@ -39,10 +42,11 @@ public class SensorServiceTest {
 
 		System.out.println("Saved id: " + result.getId());
 		
-		//get reading
-		SensorReading result2 = this.restTemplate.getForObject("http://localhost:" + port + "/reading",
-				SensorReading.class);
+		//re-retrieve reading
+		SensorReading result2 = this.restTemplate.getForObject("http://localhost:" + port + "/reading/{id}",
+				SensorReading.class, Map.of("id", result.getId()));
 		assertNotNull(result2);
+		assertEquals(result.getId(), result2.getId());
 	}
 	
 }
