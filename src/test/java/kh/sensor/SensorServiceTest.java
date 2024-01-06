@@ -17,6 +17,9 @@ import org.springframework.http.MediaType;
 
 import kh.sensor.data.SensorReading;
 
+/**
+ * Full test starts the server container to test the endpoints using RestTemplate.
+ */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class SensorServiceTest {
 
